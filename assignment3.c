@@ -174,7 +174,7 @@ int main(int argc, char **argv){
     fclose(fs);
     fclose(output);
 
-    
+
 
     char buffer3[20*1024*1024];
     fs = fmemopen(buffer3, sizeof(buffer3), "w");
@@ -197,6 +197,64 @@ int main(int argc, char **argv){
     printf("Clock Time: %.3f\n",(end - start)/(double) base);
     
     output = fopen("./output4", "w");
+    fwrite(fs,1,sizeof(fs),output);
+
+    fclose(fs);
+    fclose(output);
+
+
+
+    char buffer4[20*1024*1024];
+    fs = fmemopen(buffer4, sizeof(buffer4), "w");
+    if(fs == NULL) {
+        perror("Error creating custom stream");
+        exit(EXIT_FAILURE);
+    }
+    source = fopen("./source2", "r");
+
+    base= 0;
+    base=sysconf( _SC_CLK_TCK );
+    start = times(&tmsstart);
+    char readbuf4[4096];
+    while(fgets(readbuf4, sizeof(readbuf4), source) != NULL){
+        fputs(readbuf4, sizeof(readbuf4), fs);
+    }
+    end = times(&tmsend);
+    printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
+    printf("System CPU Time: %.3f\n",(tmsend.tms_stime-tmsstart.tms_stime)/(double) base);
+    printf("Clock Time: %.3f\n",(end - start)/(double) base);
+    
+    output = fopen("./output5", "w");
+    fwrite(fs,1,sizeof(fs),output);
+
+    fclose(fs);
+    fclose(output);
+
+
+
+    char buffer5[20*1024*1024];
+    fs = fmemopen(buffer5, sizeof(buffer5), "w");
+    if(fs == NULL) {
+        perror("Error creating custom stream");
+        exit(EXIT_FAILURE);
+    }
+    source = fopen("./source2", "r");
+
+    base= 0;
+    base=sysconf( _SC_CLK_TCK );
+    start = times(&tmsstart);
+    char c = '';
+    c = fgetc(source);
+    while(c != EOF){
+        fputc(c, fs);
+        c = fgetc(source);
+    }
+    end = times(&tmsend);
+    printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
+    printf("System CPU Time: %.3f\n",(tmsend.tms_stime-tmsstart.tms_stime)/(double) base);
+    printf("Clock Time: %.3f\n",(end - start)/(double) base);
+    
+    output = fopen("./output6", "w");
     fwrite(fs,1,sizeof(fs),output);
 
     fclose(fs);
