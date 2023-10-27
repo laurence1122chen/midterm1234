@@ -243,7 +243,7 @@ int main(int argc, char **argv){
     base= 0;
     base=sysconf( _SC_CLK_TCK );
     start = times(&tmsstart);
-    char c = '';
+    char c;
     c = fgetc(source);
     while(c != EOF){
         fputc(c, fs);
