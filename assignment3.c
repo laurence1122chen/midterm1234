@@ -100,7 +100,7 @@ int main(int argc, char **argv){
     clock_t start = times(&tmsstart);
     char readbuf[1];
     while(fread(readbuf, 1, sizeof(readbuf), source) > 0){
-        fwrite(fs, 1, sizeof(readbuf),readbuf);
+        fwrite(readbuf, 1, sizeof(readbuf),fs);
     }
     clock_t end = times(&tmsend);
     printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
@@ -108,7 +108,7 @@ int main(int argc, char **argv){
     printf("Clock Time: %.3f\n",(end - start)/(double) base);
     
     FILE *output = fopen("./output1", "w");
-    fwrite(output,1,sizeof(fs),fs);
+    fwrite(fs,1,sizeof(fs),output);
 
     fclose(fs);
     fclose(output);
