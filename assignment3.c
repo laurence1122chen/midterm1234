@@ -217,7 +217,7 @@ int main(int argc, char **argv){
     start = times(&tmsstart);
     char readbuf4[4096];
     while(fgets(readbuf4, sizeof(readbuf4), source) != NULL){
-        fputs(readbuf4, sizeof(readbuf4), fs);
+        fputs(readbuf4, fs);
     }
     end = times(&tmsend);
     printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
