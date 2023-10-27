@@ -85,6 +85,9 @@ FILE *fmemopen(void *buf, size_t size, const char *restrict){
     fs->position = 0;
     return funopen( fs, readfn, writefn, seekfn, closefn);
 }
+void ff(int ss){
+    
+}
 int main(int argc, char **argv){
     char buffer[20*1024*1024];
     FILE *fs = fmemopen(buffer, sizeof(buffer), "w");
@@ -112,6 +115,94 @@ int main(int argc, char **argv){
 
     fclose(fs);
     fclose(output);
+
+
+
+
+
+
+    char buffer1[20*1024*1024];
+    fs = fmemopen(buffer1, sizeof(buffer1), "w");
+    if(fs == NULL) {
+        perror("Error creating custom stream");
+        exit(EXIT_FAILURE);
+    }
+    source = fopen("./source2", "r");
+
+    base= 0;
+    base=sysconf( _SC_CLK_TCK );
+    start = times(&tmsstart);
+    char readbuf1[32];
+    while(fread(readbuf1, 1, sizeof(readbuf1), source) > 0){
+        fwrite(readbuf1, 1, sizeof(readbuf1),fs);
+    }
+    end = times(&tmsend);
+    printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
+    printf("System CPU Time: %.3f\n",(tmsend.tms_stime-tmsstart.tms_stime)/(double) base);
+    printf("Clock Time: %.3f\n",(end - start)/(double) base);
+    
+    output = fopen("./output2", "w");
+    fwrite(fs,1,sizeof(fs),output);
+
+    fclose(fs);
+    fclose(output);
+
+
+    char buffer2[20*1024*1024];
+    fs = fmemopen(buffer2, sizeof(buffer2), "w");
+    if(fs == NULL) {
+        perror("Error creating custom stream");
+        exit(EXIT_FAILURE);
+    }
+    source = fopen("./source2", "r");
+
+    base= 0;
+    base=sysconf( _SC_CLK_TCK );
+    start = times(&tmsstart);
+    char readbuf2[1024];
+    while(fread(readbuf2, 1, sizeof(readbuf2), source) > 0){
+        fwrite(readbuf2, 1, sizeof(readbuf2),fs);
+    }
+    end = times(&tmsend);
+    printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
+    printf("System CPU Time: %.3f\n",(tmsend.tms_stime-tmsstart.tms_stime)/(double) base);
+    printf("Clock Time: %.3f\n",(end - start)/(double) base);
+    
+    output = fopen("./output3", "w");
+    fwrite(fs,1,sizeof(fs),output);
+
+    fclose(fs);
+    fclose(output);
+
+    
+
+    char buffer3[20*1024*1024];
+    fs = fmemopen(buffer3, sizeof(buffer3), "w");
+    if(fs == NULL) {
+        perror("Error creating custom stream");
+        exit(EXIT_FAILURE);
+    }
+    source = fopen("./source2", "r");
+
+    base= 0;
+    base=sysconf( _SC_CLK_TCK );
+    start = times(&tmsstart);
+    char readbuf3[4096];
+    while(fread(readbuf3, 1, sizeof(readbuf3), source) > 0){
+        fwrite(readbuf3, 1, sizeof(readbuf3),fs);
+    }
+    end = times(&tmsend);
+    printf("User CPU Time: %.3f\n",(tmsend.tms_utime-tmsstart.tms_utime)/(double) base);
+    printf("System CPU Time: %.3f\n",(tmsend.tms_stime-tmsstart.tms_stime)/(double) base);
+    printf("Clock Time: %.3f\n",(end - start)/(double) base);
+    
+    output = fopen("./output4", "w");
+    fwrite(fs,1,sizeof(fs),output);
+
+    fclose(fs);
+    fclose(output);
+
+    
 
 
 
